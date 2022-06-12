@@ -1,0 +1,186 @@
+[i]HLIGHTS
+[i]Please Note: This game is made only for educational purposes and will not be sold.
+[i]Disclaimer: By playing this software you agree to take all responsibility for any damages, hardware and software, caused to your calculator.
+[i]--------------------------------------
+[i] Program Name: Headlights CE
+[i] Author: Lane "OldNewTimer" Nickson
+[i] Build: 1.1
+[i]--------------------------------------
+[i]VARIABLES
+[i]A=GetKeyVar
+[i]B=Buffer
+[i]C=Car Score 
+[i]D=Deer Score
+[i]E=Number of deer passed
+[i]O=Deer X coord
+[i]X=Car X coord
+[i]Y=Car and Deer Y coords
+[i]Z=Buffer
+[i]==========start the graphics and display the title screen==========
+AsmComp(HEADG
+0->A->B->C->D->E->F->G->H->I->J->K->L->M->N->O->P->Q->R->S->T->U->V->X->Y->Z
+Begin
+[i]=========Show Logo=========
+Lbl LOGO
+SetDraw(1
+While B!=120
+	SetColor(255
+	FillRectangle(B-2,50,2,100
+	ScaledTransparentSprite_NoClip(LOGO,B,50,40,40)
+	Blit(1
+	B+2->B
+End
+SetDraw(0
+SetTextScale(2,2
+det(18,"OLDNEWTIMER PRESENTS",7,170
+Pause 1500
+FillScreen(29
+SetColor(29
+SetTextBGColor(29
+SetTextFGColor(223
+SetTextScale(3,3
+PrintStringXY("HEADLIGHTS",40,30)
+SetTextScale(1,1
+PrintStringXY("THE GAME OF SWERVING AND SKILL",50,56
+PrintStringXY("'18 OldNewTimer",5,229
+PrintStringXY("A CC:20 Project",210,229
+ScaledTransparentSprite_NoClip(DEER,20,80,2,2)
+ScaledTransparentSprite_NoClip(CAR,250,70,2,2)
+0->A->B->C->D->E->F->G->H->I->J->K->L->M->N->O->P->Q->R->S->T->U->V->X->Y->Z
+[i]==========Blinking "Press Any Key..."==========
+While B=0
+
+	PrintStringXY("Press Any Key",105,90
+		While X<6000
+			getKey->A
+				If A>0
+				A->B
+				End
+			X+1->X
+		End
+	0->X
+	FillRectangle(100,90,100,10
+		While X<6000
+			getKey->A
+				If A>0
+				A->B
+				End
+			X+1->X
+		End
+	0->X
+End
+If A=15
+	Goto END
+End
+Lbl ROAD
+0->A->B->E->F->G->H->I->J->K->L->M->N->O->P->Q->R->S->T->U->V->X->Y->Z+170->UP
+CloseAll
+   Alloc(2)->DATA
+   Open("HEADHI","r"->ZZ
+   Read(DATA,28,1,ZZ)
+   CloseAll
+	If ZZ=0
+		0->HI
+   End
+   CloseAll
+   **{DATA->HI
+[i]==========Display Road==========
+FillScreen(29
+SetColor(0
+FillRectangle(85,0,150,240
+SetColor(223
+Line(90,0,90,240
+Line(230,0,230,240
+[i]==========Display dotted lines==========
+While Z<=240
+	SetColor(223
+	Line(160,Z,160,Z+10
+	Z+20->Z
+End
+[i]==========Show text==========
+SetTextBGColor(0
+SetTextFGColor(223
+PrintStringXY("Driver",250,20
+PrintStringXY("Deer",25,20
+PrintStringXY("Press Enter",238,180
+PrintStringXY("to switch",238,190
+PrintStringXY("lanes",238,200
+PrintStringXY("Press Clear",238,220
+PrintStringXY("to exit",238,230
+SetTextXY(25,30
+PrintUInt(D,4
+SetTextXY(255,30
+PrintUInt(C,4
+If C>HI
+	C->HI
+End
+PrintStringXY("HI-SCORE:",5,180
+SetTextXY(20,190)
+PrintUInt(HI,4
+0->B->E->H->Z->Y+110->X
+1->P
+remainder(rand,2)->B
+If B=0
+	100->O
+Else
+	170->O
+End
+[i]==========User Controls Car/Main Game==========
+While A!=15
+	ScaledSprite_NoClip(CAR,X,UP,2,2)
+	ScaledSprite_NoClip(DEER,O,Y,2,2)
+	getKey->A
+	If A=9
+		SetColor(0
+		FillRectangle(110,UP,50,80
+		FillRectangle(180,UP,50,80
+		70+X->X
+	End
+	If X>180
+	110->X
+	End
+	SetColor(0
+	FillRectangle(O,Y,60,1
+	1+Y->Y
+	If (Y+28)>=UP and X=O+10
+		If UP>=(Y-16)
+		PrintStringXY("BOOM!",25,100
+			211->Y
+			0->C
+		1+D->D
+		Pause 1000
+		Goto ROAD
+		End
+	End
+	If Y=200
+		FillRectangle(110,UP,50,80
+		FillRectangle(180,UP,50,80
+		UP-10->UP
+		If UP<=40
+			1+C->C
+			SetTextXY(255,30
+			PrintUInt(C,4
+			170->UP
+		End
+	End
+	If Y>210
+		FillRectangle(O,Y,60,60
+		remainder(rand,101)->B
+		If B>50
+			100->O
+		Else
+			170->O
+		End
+		0->Y
+	End
+	Pause 4
+End
+Alloc(2)->DATA
+HI->**{DATA
+CloseAll
+Open("HEADHI","w"->ZZ
+Write(DATA,28,2,ZZ
+SetArchiveStatus(1,ZZ)
+	Close(ZZ
+Lbl END
+det(1
