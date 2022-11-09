@@ -1,7 +1,7 @@
 # Headlights CE
 A "donkey.bas" clone for the TI-84 Plus CE calculator.
 
-![Game GIF](https://oldnewtimer.github.io/images/hea.gif)
+![Game GIF](https://oldnewtimer.github.io/assets/images/headlights.gif)
                                                                                                                                          
 ## Installation
 
